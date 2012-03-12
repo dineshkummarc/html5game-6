@@ -1,6 +1,7 @@
 window.onload = function () {
 	
 	Crafty.init(600,300);
+	Crafty.background('rgb(127,127,127)');
 	
 	// paddle
 	Crafty.e("paddle,2D,DOM,Color,Multiway")
@@ -22,7 +23,7 @@ window.onload = function () {
 	Crafty.e("ball,2D,DOM,Color,Collision")
 		.color('rgb(0,255,0)')
 		.attr({w:10, h:10, x:300, y:150,
-			   dX: Crafty.math.randomInt(3, 4),
+			   dX: Crafty.math.randomInt(2, 4),
 			   dY: Crafty.math.randomInt(3, 4) })
 	    .bind('EnterFrame', function () {
 	    	// if hit left/right wall
@@ -34,7 +35,7 @@ window.onload = function () {
 	    		this.dY *= -1;
 	    	}
 	    	
-	    	if (this.y >= 290) {
+	    	if (this.y >= 295) {
 	    		this.x = 300;
 	    		this.y = 150;
 	    		this.dX = Crafty.math.randomInt(3, 4);
@@ -45,6 +46,7 @@ window.onload = function () {
 			this.y += this.dY;
 	    })
 	    .onHit('paddle', function () {
+	    	this.y = 280;
 	    	this.dY *= -1;
 	    })
 	    .onHit('bricks', function() {
@@ -55,16 +57,16 @@ window.onload = function () {
 	var j = 0;
 	var i = 0;
 	var count = 0;
-	while (count < 50) {
+	while (count < 60) {
 		
-		var posX = i*50 + (i+1)*10;
-		var posY = j*20 + (j+1)*10;
+		var posX = i*35 + (i+1)*5;
+		var posY = j*20 + (j+1)*5;
 		
 		if (posX > 600) {			
 			i = 0;
 			j += 1;
-			posX = i*50 + (i+1)*10;
-			posY = j*20 + (j+1)*10;	
+			posX = i*35 + (i+1)*5;
+			posY = j*20 + (j+1)*5;	
 		}
 		
 		i++;
@@ -72,10 +74,9 @@ window.onload = function () {
 		
 		Crafty.e("bricks,2D,DOM,Color,Collision")
 			.color("rgb(23,45,255)")
-			.attr({w:50, h:20, x:posX, y:posY})
+			.attr({w:35, h:20, x:posX, y:posY})
 			.onHit("ball",function(){
 				this.destroy();
-				
 			});
 	};
 	
